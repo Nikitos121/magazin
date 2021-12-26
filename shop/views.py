@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from shop.models import Category, Product, Image
+from shop.serializers import CategorySerializer, ProductSerializer, ImageSerializer
 
 
 def all_categories(request):
@@ -33,3 +35,33 @@ def about_product(request, pk):
             'images': Image.objects.filter(product_id=pk),
         },
     )
+
+
+class CategoryListCreateAPIView(ListCreateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class CategoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class ProductListCreateAPIView(ListCreateAPIView):
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+
+
+class ProductRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ProductSerializer
+    queryset = Product.objects.all()
+
+
+class ImageListCreateAPIView(ListCreateAPIView):
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+
+
+class ImageRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
