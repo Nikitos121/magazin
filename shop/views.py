@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from shop.models import Category, Product, Image
@@ -10,7 +10,7 @@ def all_categories(request):
         request,
         'all_categories.html',
         {
-            'categories': Category.objects.all()
+            'categories': Category.objects.all(),
         },
     )
 
@@ -20,8 +20,8 @@ def all_products(request, pk):
         request,
         'all_products.html',
         {
-            'category': Category.objects.get(id=pk),
-            'products': Product.objects.filter(category_id=pk)
+            'category': get_object_or_404(Category, pk=pk),
+            'products': Product.objects.filter(category_id=pk),
         },
     )
 
@@ -31,7 +31,7 @@ def about_product(request, pk):
         request,
         'about_product.html',
         {
-            'product': Product.objects.get(id=pk),
+            'product': get_object_or_404(Product, pk=pk),
             'images': Image.objects.filter(product_id=pk),
         },
     )
